@@ -56,13 +56,42 @@ class Emojifier {
         // If there are no faces detected, show a Toast message
         if(faces.size() == 0){
             Toast.makeText(context, R.string.no_faces_message, Toast.LENGTH_SHORT).show();
+        } else {
+            getClassifications(faces);
         }
 
         // TODO (2): Iterate through the faces, calling getClassifications() for each face.
-
+        
         // Release the detector
         detector.release();
     }
 
     // TODO (1): Create a static method called getClassifications() which logs the probability of each eye being open and that the person is smiling.
+    static void getClassifications(SparseArray<Face> faces){
+        for(int i=0; i<faces.size(); ++i) {
+            Face face = faces.valueAt(i);
+            int id = face.getId();
+            boolean leftEyeOpen = face.getIsLeftEyeOpenProbability()>0.70;
+            boolean rightEyeOpen = face.getIsRightEyeOpenProbability()>0.70;
+            boolean bothEyeOpen = leftEyeOpen && rightEyeOpen;
+            boolean bothEyeClosed = (!leftEyeOpen) && (!rightEyeOpen);
+            boolean smiling = face.getIsSmilingProbability()>0.70;
+            if(bothEyeOpen) {
+                Log.d("PSX", "Mind ket szem nyitva");
+            } else if (bothEyeClosed) {
+                Log.d("PSX", "Mind ket szem zarva");
+            } else if (rightEyeOpen) {
+                Log.d("PSX", "Jobb szem nyitva");
+            } else if(leftEyeOpen){
+                Log.d("PSX", "Bal szem nyitva");
+            }
+            if(smiling){
+                Log.d("PSX", "Mosolyog");
+            } else {
+                Log.d("PSX", "Nem mosolyog");
+            }
+            
+            
+        }
+    }
 }

@@ -139,10 +139,10 @@ public class MainActivity extends AppCompatActivity {
                 mTempPhotoPath = photoFile.getAbsolutePath();
 
                 // Get the content URI for the image file
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        FILE_PROVIDER_AUTHORITY,
-                        photoFile);
-
+//                Uri photoURI = FileProvider.getUriForFile(this,
+//                        FILE_PROVIDER_AUTHORITY,
+//                        photoFile);
+                Uri photoURI = Uri.fromFile(photoFile);
                 // Add the URI so the camera can store the image
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
 
