@@ -139,10 +139,10 @@ public class MainActivity extends AppCompatActivity {
                 mTempPhotoPath = photoFile.getAbsolutePath();
 
                 // Get the content URI for the image file
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        FILE_PROVIDER_AUTHORITY,
-                        photoFile);
-
+//                Uri photoURI = FileProvider.getUriForFile(this,
+//                        FILE_PROVIDER_AUTHORITY,
+//                        photoFile);
+                Uri photoURI = Uri.fromFile(photoFile);
                 // Add the URI so the camera can store the image
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
 
@@ -182,8 +182,8 @@ public class MainActivity extends AppCompatActivity {
         mResultsBitmap = BitmapUtils.resamplePic(this, mTempPhotoPath);
         
         // Detect the faces
-        Emojifier.detectFaces(this, mResultsBitmap);
-        // TODO (10): Change the method call from detectFaces() to detectFacesAndOverlayEmoji() and assign the result to mResultsBitmap.
+        mResultsBitmap=Emojifier.detectFacesAndOverlayEmoji(this, mResultsBitmap);
+        // TODO (10): Change the method call from detectFacesAndOverlayEmoji() to detectFacesAndOverlayEmoji() and assign the result to mResultsBitmap.
         
         // Set the new bitmap to the ImageView
         mImageView.setImageBitmap(mResultsBitmap);
